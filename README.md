@@ -66,6 +66,11 @@ La clase `BaseDeDatos` facilita la interacción con una base de datos PostgreSQL
 - **Obtención de Datos**: Incluye métodos para recuperar datos, como obtener todos los productos, proveedores o categorías, así como buscar productos basados en ciertos criterios.
 - **Operaciones de Gestión de Ventas**: Permite registrar ventas, insertar detalles de ventas y calcular el total de ventas en una fecha específica.
 
+La estructura de la base de datos se muestra en el siguiente diagrama:
+
+![bdd](https://github.com/lizbeth-cortes/app-java/assets/60724433/c0714953-9fec-4897-b474-b86b96cd33f7)
+
+
 ## Archivos Incluidos en el Proyecto
 
 En este proyecto se incluye tanto el archivo de la base de datos y el código de la aplicación de Java. Si sólo se quiere ejecutar la aplicación, sólo es necesario descargar la carpeta `dist`, la cual contiene el archivo ejecutable llamado `sistema.jar`. Por supuesto, también es necesario importar la base de datos que también se incluye en dicha carpeta.
