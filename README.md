@@ -51,12 +51,6 @@ Las clases que se encuentran en los paquetes `sistema.gui` representan la interf
   
   ![app-ventas-modificar](https://github.com/lizbeth-cortes/app-java/assets/60724433/1d9ab7f3-bdc8-4705-ae71-6039e7ef6078)
 
-
-
-
-
-
-
 ## Base de Datos
 
 La clase `BaseDeDatos` facilita la interacción con una base de datos PostgreSQL, ofreciendo métodos para realizar operaciones comunes:
@@ -73,7 +67,7 @@ La estructura de la base de datos se muestra en el siguiente diagrama:
 
 ## Archivos Incluidos en el Proyecto
 
-En este proyecto se incluye tanto el archivo de la base de datos y el código de la aplicación de Java. Si sólo se quiere ejecutar la aplicación, sólo es necesario descargar la carpeta `dist`, la cual contiene el archivo ejecutable llamado `sistema.jar`. Por supuesto, también es necesario importar la base de datos que también se incluye en dicha carpeta.
+En este proyecto se incluye tanto el archivo de la base de datos y el código de la aplicación de Java. Si sólo se quiere ejecutar la aplicación, sólo es necesario descargar la carpeta `dist`, la cual contiene el archivo ejecutable llamado `sistema.jar`. Por supuesto, también es necesario importar la base de datos que también se incluye en dicha carpeta, el archivo se llama `sistema.sql`.
 
 ## Nota
 
