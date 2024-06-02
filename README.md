@@ -71,4 +71,4 @@ En este proyecto se incluye tanto el archivo de la base de datos y el código de
 
 ## Nota
 
-Este proyecto fue una de las actividades realizadas en el curso de Udemy [¡Ahora con JavaFX! Aprende conceptos básicos de programación hasta el desarrollo de un sistema completo con Java](https://ibmcsr.udemy.com/certificate/UC-2d303990-3436-437f-bc47-2fc146caf255/)
+Este proyecto fue una de las actividades realizadas en el curso de Udemy [Aprender a programar con Java. De cero hasta hacer sistemas.](https://ibmcsr.udemy.com/certificate/UC-2d303990-3436-437f-bc47-2fc146caf255/)
