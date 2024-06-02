@@ -1,0 +1,561 @@
+package sistema.gui;
+
+import java.awt.Image;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import sistema.datos.BaseDeDatos;
+import sistema.pojos.CategoriaProd;
+import sistema.pojos.Producto;
+import sistema.pojos.Proveedor;
+
+/**
+ *
+ * @author Lyzz
+ */
+public class ProductoFrame extends javax.swing.JDialog {
+    // Modelos de ComboBox predeterminados para Categoría de Producto y Proveedor
+
+    DefaultComboBoxModel<CategoriaProd> modeloCategorias;
+    DefaultComboBoxModel<Proveedor> modeloProveedor;
+
+    // Objeto para acceder a la base de datos
+    BaseDeDatos base;
+    boolean estaActualizando;
+    String informacion = "";
+
+    /**
+     * Constructor de la clase ArticuloFrame
+     *
+     * @param parent El frame padre
+     * @param modal Indica si el diálogo es modal o no
+     */
+    public ProductoFrame(java.awt.Frame parent, boolean modal, Producto producto, ImageIcon icon, String titulo, boolean actualizando) {
+        super(parent, modal);
+
+        // Inicialización de los modelos de ComboBox y la base de datos
+        modeloCategorias = new DefaultComboBoxModel<>();
+        modeloProveedor = new DefaultComboBoxModel<>();
+        base = new BaseDeDatos();
+
+        // Carga inicial del modelo de categorías de productos y proveedores
+        cargarModeloCat();
+        cargarModeloProv();
+
+        // Inicialización de los componentes de la interfaz gráfica
+        initComponents();
+        this.estaActualizando = actualizando;
+        this.setTitle(titulo);
+        if (producto != null) {
+            cargarProducto(producto, icon);
+        }
+
+    }
+
+    /**
+     * Carga los datos de un producto en los campos de la interfaz gráfica.
+     *
+     * @param producto El objeto Producto que contiene la información del
+     * producto a cargar.
+     * @param icono El icono a mostrar junto al producto en la interfaz gráfica.
+     */
+    private void cargarProducto(Producto producto, ImageIcon icono) {
+
+        //Redimensión de imagen para ajustarla al tamaño del JLabel
+        Image imgProd = icono.getImage();
+        // Obtener el ancho y alto del JLabel lblImagenArticulo
+        int anchoImagen = lblImagenArticulo.getWidth();
+        int altoImagen = lblImagenArticulo.getHeight();
+
+        // Se crea un nuevo un objeto Image con la imagen redimensionada
+        Image imgRedimensionada = imgProd.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_DEFAULT);
+
+        // Se crea un nuevo ImageIcon con la imagen redimensionada
+        ImageIcon iconRedimensionado = new ImageIcon(imgRedimensionada);
+
+        // Establece el icono del producto en la etiqueta de la imagen.
+        lblImagenArticulo.setIcon(iconRedimensionado);
+
+        // Extrae los datos del producto.
+        String clave = producto.getIdProducto();
+        String nombre = producto.getNomProducto();
+        String descripcion = producto.getDescProducto();
+        double stockRequerido = producto.getStockProducto();
+        String unidad = producto.getUnidadProducto();
+        double precioCompra = producto.getPrecioCompraProducto();
+        double precioVenta = producto.getPrecioVentaProducto();
+
+        // Asigna los datos del producto a los campos de la interfaz gráfica.
+        campoClave.setText(clave);
+        campoNombre.setText(nombre);
+        campoDescripcion.setText(descripcion);
+        campoStock.setText(String.valueOf(stockRequerido));
+        comboUnidades.setSelectedItem(unidad);
+        campoPrecioCompra.setText(String.valueOf(precioCompra));
+        campoPrecioVenta.setText(String.valueOf(precioVenta));
+
+        // Deshabilita la edición de los campos de clave y nombre.
+        campoClave.setEnabled(false);
+        campoNombre.setEnabled(false);
+    }
+
+    /**
+     * Método privado para cargar el modelo de categorías de productos
+     */
+    private void cargarModeloCat() {
+        // Lista de categorías de productos obtenida de la base de datos
+        ArrayList<CategoriaProd> listaCategorias;
+        listaCategorias = base.obtenerCategoria();
+
+        // Agregar cada categoría de la lista al modelo de categorías
+        for (CategoriaProd categoria : listaCategorias) {
+            modeloCategorias.addElement(categoria);
+        }
+    }
+
+    private void cargarModeloProv() {
+        ArrayList<Proveedor> listaProveedores;
+        listaProveedores = base.obtenerProoveedores();
+
+        // Agregar cada categoría de la lista al modelo de categorías
+        for (Proveedor prov : listaProveedores) {
+            modeloProveedor.addElement(prov);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        campoClave = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        campoStock = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        comboCategorias = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        campoPrecioCompra = new javax.swing.JTextField();
+        campoPrecioVenta = new javax.swing.JTextField();
+        btnGuardarProducto = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lblImagenArticulo = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        comboProveedores = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        campoNombre = new javax.swing.JTextField();
+        comboUnidades = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        campoDescripcion = new javax.swing.JTextArea();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Clave:");
+
+        campoClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoClaveActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Descripción:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Stock requerido:");
+
+        campoStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoStockActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Categoría");
+
+        comboCategorias.setModel(modeloCategorias);
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setText("Nueva categoría");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Unidad de medida");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Precio de compra:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Precio de venta:");
+
+        campoPrecioCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoPrecioCompraActionPerformed(evt);
+            }
+        });
+
+        btnGuardarProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnGuardarProducto.setText("Guardar");
+        btnGuardarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarProductoActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
+        lblImagenArticulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImagenArticuloMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImagenArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImagenArticulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Proveedor");
+
+        comboProveedores.setModel(modeloProveedor);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Nombre:");
+
+        comboUnidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kilogramo", "Pieza", "Litro" }));
+
+        campoDescripcion.setColumns(20);
+        campoDescripcion.setRows(5);
+        jScrollPane2.setViewportView(campoDescripcion);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(campoClave)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(43, 43, 43)
+                                        .addComponent(btnGuardarProducto)
+                                        .addGap(69, 69, 69)
+                                        .addComponent(btnCancelar))
+                                    .addComponent(jLabel2))
+                                .addGap(41, 41, 41))
+                            .addComponent(jLabel8)
+                            .addComponent(campoNombre)
+                            .addComponent(jScrollPane2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3)
+                                    .addComponent(campoStock, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(comboUnidades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel6)
+                                            .addComponent(campoPrecioCompra)
+                                            .addComponent(comboCategorias, 0, 163, Short.MAX_VALUE))
+                                        .addGap(32, 32, 32)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jButton1)
+                                            .addComponent(campoPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel9)
+                            .addComponent(comboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campoStock)
+                            .addComponent(comboCategorias)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboUnidades, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(campoPrecioCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(campoPrecioVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(campoNombre))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardarProducto)
+                            .addComponent(btnCancelar))))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void campoClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoClaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoClaveActionPerformed
+
+    private void campoStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoStockActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CategoriaFrame categoria = new CategoriaFrame(null, true);
+        categoria.setVisible(true);
+        categoria.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        categoria.setLocation(600, 150);
+        categoria.setAlwaysOnTop(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void campoPrecioCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPrecioCompraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoPrecioCompraActionPerformed
+
+    private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
+        String codigo = campoClave.getText().toLowerCase();
+        String nombre = campoNombre.getText().toLowerCase();
+        String descripcion = campoDescripcion.getText().toLowerCase();
+        String stockText = campoStock.getText();
+        String precioCompraText = campoPrecioCompra.getText();
+        String precioVentaText = campoPrecioVenta.getText();
+        String unidad = comboUnidades.getSelectedItem().toString();
+        CategoriaProd categoria = (CategoriaProd) comboCategorias.getSelectedItem();
+        Proveedor proveedor = (Proveedor) comboProveedores.getSelectedItem();
+
+        // Verificar que los campos de texto de stock, precioCompra y precioVenta no estén vacíos
+        if (!stockText.isEmpty() && !precioCompraText.isEmpty() && !precioVentaText.isEmpty()
+                && !codigo.isEmpty() && !nombre.isEmpty() && !descripcion.isEmpty()) {
+            double stock = Double.parseDouble(stockText);
+            double precioCompra = Double.parseDouble(precioCompraText);
+            double precioVenta = Double.parseDouble(precioVentaText);
+
+            if (estaActualizando) {
+                if (imgArticleFile == null) {
+                    Producto producto = new Producto(codigo, nombre, descripcion,
+                            stock, null, unidad, precioCompra, precioVenta,
+                            0.0, categoria.getIdCategoriaProd(), proveedor.getId_proveedor());
+
+                    base.actualizarProducto(producto, false);
+                    this.dispose();
+                } else {
+                    Producto producto = new Producto(codigo, nombre, descripcion,
+                            stock, imgArticleFile, unidad, precioCompra,
+                            precioVenta, 0.0, categoria.getIdCategoriaProd(),
+                            proveedor.getId_proveedor());
+                    base.actualizarProducto(producto, true);
+                    this.dispose();
+                }
+                JOptionPane.showMessageDialog(this, "Producto guardado con éxito");
+                this.dispose();
+                informacion = "1";
+            } else {
+                if (imgArticleFile == null) {
+                    JOptionPane.showMessageDialog(this, "Asegúrese de haber elegido una imagen");
+                } else {
+                    Producto producto = new Producto(codigo, nombre, descripcion, stock,
+                            imgArticleFile, unidad, precioCompra, precioVenta,
+                            0.0, categoria.getIdCategoriaProd(), proveedor.getId_proveedor());
+                    base.insertarProducto(producto);
+                    JOptionPane.showMessageDialog(this, "Producto guardado con éxito");
+                    this.dispose();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Asegúrese de que ningún campo esté vacío.");
+        }
+    }//GEN-LAST:event_btnGuardarProductoActionPerformed
+
+    public String getInformacion() {
+        return this.informacion;
+    }
+
+    File imgArticleFile;
+    private void lblImagenArticuloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenArticuloMouseClicked
+        // Crear un objeto JFileChooser para seleccionar archivos de imagen
+        JFileChooser chooser = new JFileChooser();
+
+        // Establecer un filtro para mostrar solo archivos de imagen JPG, GIF y PNG
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Archivos de imagen jpg, gif o png",
+                "jpg", "gif", "png");
+        chooser.setFileFilter(filter);
+
+        // Mostrar el diálogo de selección de archivo
+        int returnVal = chooser.showOpenDialog(this);
+
+        // Si el usuario selecciona un archivo
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // Obtener el ancho y alto del JLabel lblImagenArticulo
+            int anchoImagen = lblImagenArticulo.getWidth();
+            int altoImagen = lblImagenArticulo.getHeight();
+
+            // Obtener el archivo de imagen seleccionado
+            imgArticleFile = chooser.getSelectedFile();
+
+            // Crear un ImageIcon con la ruta del archivo de imagen seleccionado
+            ImageIcon icono = new ImageIcon(imgArticleFile.getAbsolutePath());
+
+            // Obtener la imagen del ImageIcon
+            Image imagen = icono.getImage();
+
+            // Escalar la imagen al tamaño del JLabel
+            Image imagenRedimensionada = imagen.getScaledInstance(anchoImagen, altoImagen, Image.SCALE_SMOOTH);
+
+            // Crear un nuevo ImageIcon con la imagen redimensionada
+            ImageIcon iconoRedimensionado = new ImageIcon(imagenRedimensionada);
+
+            // Establecer el ImageIcon redimensionado como icono del JLabel
+            lblImagenArticulo.setIcon(iconoRedimensionado);
+
+        }
+    }//GEN-LAST:event_lblImagenArticuloMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //ProductoFrame dialog = new ProductoFrame(new javax.swing.JFrame(), true);
+                ProductoFrame dialog = new ProductoFrame(new javax.swing.JFrame(), true, null, null, "Nuevo producto", false);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardarProducto;
+    private javax.swing.JTextField campoClave;
+    private javax.swing.JTextArea campoDescripcion;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JTextField campoPrecioCompra;
+    private javax.swing.JTextField campoPrecioVenta;
+    private javax.swing.JTextField campoStock;
+    private javax.swing.JComboBox<CategoriaProd> comboCategorias;
+    private javax.swing.JComboBox<Proveedor> comboProveedores;
+    private javax.swing.JComboBox<String> comboUnidades;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblImagenArticulo;
+    // End of variables declaration//GEN-END:variables
+}
